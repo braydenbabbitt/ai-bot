@@ -1,9 +1,9 @@
 import os
 
+from functions.verify_target_path import verify_target_path
+
 def get_files_info(working_directory: str, directory: str = "."):
-    abs_working_dir = os.path.abspath(working_directory)
-    abs_target_dir = os.path.normpath(os.path.join(abs_working_dir, directory))
-    target_dir_is_valid = os.path.commonpath([abs_working_dir, abs_target_dir]) == abs_working_dir
+    target_dir_is_valid, abs_target_dir = verify_target_path(working_directory, directory)
     if not target_dir_is_valid:
         return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
     if not os.path.isdir(abs_target_dir):
